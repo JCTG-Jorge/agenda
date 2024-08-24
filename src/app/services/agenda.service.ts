@@ -1,0 +1,19 @@
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AgendaService {
+
+  private API = 'https://autolxap02-12.cieautometal.com.br:8090/'
+
+  constructor(private http: HttpClient) { }
+
+  listaAgenda():  Observable<any>{
+    let url = this.API + 'api/wscurso/v1/agenda'
+
+    return this.http.get<any>(url)
+  }
+}
