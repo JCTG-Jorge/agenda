@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { CabecalhoComponent } from '../../componentes/cabecalho/cabecalho.component';
 import { ContainerComponent } from '../../componentes/container/container.component';
 import { ContatoComponent } from '../../componentes/contato/contato.component';
@@ -10,6 +11,7 @@ import { AgendaService } from '../../services/agenda.service';
   selector: 'app-lista-contatos',
   standalone: true,
   imports: [
+    FormsModule,
     ContainerComponent,
     CabecalhoComponent,
     SeparadorComponent,
@@ -22,6 +24,7 @@ export class ListaContatosComponent implements OnInit {
 
   alfabeto: string = 'abcdefghijklmnopqrstuvwxyz'
   contatos: Contato[] = []
+  filtroPorTexto: string = ''
   constructor(private service: AgendaService){ }
 
   ngOnInit(): void {
@@ -36,6 +39,31 @@ export class ListaContatosComponent implements OnInit {
       }
     })
   }
+
+
+  filtrarContatosPorLetraInicial(letra: string) : Contato[] {
+    return this.filtrarContatoPorTexto().filter(contato => {
+
+     return contato.nome.toLowerCase().startsWith(letra)
+
+    })
+
+  }
+
+  filtrarContatoPorTexto(): Contato[] {
+
+    if (!this.filtroPorTexto){
+       return this.contatos
+    }
+
+    return this.contatos.filter(contato => {
+       return contato.nome.toLowerCase().includes(this.filtroPorTexto.toLowerCase())
+    })
+
+  }
+
+
+
 
 
 

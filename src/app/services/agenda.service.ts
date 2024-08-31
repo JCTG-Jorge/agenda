@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -14,6 +14,10 @@ export class AgendaService {
   listaAgenda():  Observable<any>{
     let url = this.API + 'api/wscurso/v1/agenda'
 
-    return this.http.get<any>(url)
+    let params = new HttpParams()
+    params = params.append('pageSize', 60)
+    params = params.append('page', 1)
+
+    return this.http.get<any>(url, {params: params})
   }
 }
